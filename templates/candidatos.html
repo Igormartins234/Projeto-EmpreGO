@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Candidatos - EmpreGO!{% endblock %}
+
+{% block content %}
+    <h1>Candidatos para a vaga (ID: {{ id_vaga }})</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Currículo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidato in candidatos %}
+                <tr>
+                    <td>{{ candidato.nome_candidato }}</td>
+                    <td>{{ candidato.email }}</td>
+                    <td>{{ candidato.telefone }}</td>
+                    <td><a href="{{ url_for('download_curriculo', filename=candidato.curriculo) }}">Download</a></td>  <!-- Link para download -->
+                    <form method="post" action="{{ url_for('excluir_curriculo', id_candidato=candidato.id_candidato) }}" class="d-inline">
+                        <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                    </form>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/empresa" class="btn btn-secondary">Voltar</a>
+{% endblock %}
